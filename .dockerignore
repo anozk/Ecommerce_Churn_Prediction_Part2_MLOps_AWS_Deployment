@@ -1,0 +1,12 @@
+# Add these to the top to fix the speed
+venv/
+env/
+*.csv
+*.pkl
+.git/
+
+
+*/*/*.pyc
+*/*/__pycache__
+*/*/logs
+FlaskApplication/src/.flaskenv
