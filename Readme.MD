@@ -1,3 +1,14 @@
+### Architecture
+
+![Architecture](Screenshot 2026-03-09 at 12.38.29png)
+
+
+
+
+
+
+
+
 ### MLOPS AWS
 
 This project demonstrates the end-to-end deployment of a Customer Churn Prediction model on AWS. It automates the lifecycle from model packaging and containerization to deployment and monitoring using CI/CD pipelines.
@@ -477,6 +488,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
