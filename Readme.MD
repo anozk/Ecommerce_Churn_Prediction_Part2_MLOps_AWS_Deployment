@@ -22,6 +22,11 @@ In addition, in app.py, sslmode='require' to apply SSL encryption for database c
 
 When the docker iamge gets into ECR then code pipeline informs ECS cluster that a new version is ready to be applied.This part is       also known as Continuous Integration & Deployment (CI/CD). ECS takes the new docker image from the ECR, replaces the old container task with the new one and stays ready to receive data from the Load Balancer for the next prediction. With other words. if there is a update in the Github repository regarding the chrun project then Build stage will triggered and the new tasks will be applied. Otherwise the build stage will not be triggered. 
 
+Final API Validation: Real-Time Inference Result"
+The terminal shows a successful POST request to the AWS Application Load Balancer endpoint.
+The JSON output confirms that the ECS-hosted XGBoost model successfully processed the request, returning a 92.7% churn probability.
+This validation proves that the end-to-end infrastructure—from the Terraform-managed network to the Dockerized Flask application—is fully operational.
+
 ![Prediction](Screenshot%202026-03-08%20at%2016.38.42.png)
 
 
@@ -504,6 +509,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
