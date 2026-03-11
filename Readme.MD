@@ -2,8 +2,9 @@
 
 ![Architecture](Screenshot%202026-03-09%20at%2012.38.29.png)
 
+Descriiption of the Architecture:
 
-eeeeeeeee
+User Access Path: 
 
 
 
@@ -487,6 +488,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
