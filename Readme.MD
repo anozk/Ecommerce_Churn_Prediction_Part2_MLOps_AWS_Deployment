@@ -4,8 +4,9 @@
 
 Description of the Architecture:
 
-User Access Path: A user in a e-commerce website is purchasing goods and checks out. Behind the scene at the backend, the website fethes the data based on the churn project (see Part 1) such as Warehouse To Home, Satis Faction Score, Order Amount Hike From Last Year, Order Count, Cashback Amount. The e-commerce 
+User Access Path: A user in a e-commerce website is purchasing goods and checks out. Behind the scene at the backend, the website fethes the data based on the churn project (see Part 1) such as Warehouse To Home, Satis Faction Score, Order Amount Hike From Last Year, Order Count, Cashback Amount. The e-commerce website forwrds the data to load balancer adress (churn-load-balancer-316573120.us-east-1.elb.amazonaws.com). The load balancer is at the very front of the architectaure that takes the data and forwards the data to XgBoost model in this case.  
 
+Deploy stage: 
 
 
 
@@ -488,6 +489,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
