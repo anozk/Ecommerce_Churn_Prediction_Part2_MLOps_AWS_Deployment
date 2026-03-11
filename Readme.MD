@@ -4,7 +4,7 @@
 
 Description of the Architecture:
 
-1. User Access Path: A user in a e-commerce website is purchasing goods and checks out. Behind the scene at the backend, the website fethes the data based on the churn project (see Part 1) such as Warehouse To Home, Satis Faction Score, Order Amount Hike From Last Year, Order Count, Cashback Amount. The e-commerce website forwrds the data to load balancer adress (churn-load-balancer-316573120.us-east-1.elb.amazonaws.com). The load balancer is at the very front of the architectaure that takes the data and forwards the data to XgBoost model in this case.  
+1. User Access Path: A user in a e-commerce website is purchasing goods and checks out. Behind the scene at the backend, the website fetches the data based on the churn project (see Part 1) such as Warehouse To Home, Satis Faction Score, Order Amount Hike From Last Year, Order Count, Cashback Amount columns. The e-commerce website forwrds the data to load balancer adress (churn-load-balancer-316573120.us-east-1.elb.amazonaws.com). The load balancer is at the very front of the architectaure that takes the data and forwards the data to XgBoost model in this case.  
 
 2. Deploy stage: The data is forwareded by the applicataion load balance to the ECS (Elastic Container Service) which triggers the produced docker image. In the ECS a docker file is running that is based on Python 3.8 slim to keep the image size small and to make sure XGBoost and Sickit Learn to work, Flask Application that intalls and runs the requirements.txt to verify production performance, Gunicorn to handle severel requests. The target group was, the connectin between load balancer and ECS was was configured to route traffic specifically to Port 5000. 
 Inside the ECS the XGBoost model inside the ECS cluster, calculates the churn probability of the user and sends back the results as a json format (curl -X POST "http://churn-load-balancer-316573120.us-east-1.elb.amazonaws.com/churn-prediction" \ -H "Content-Type: application/json" \ -d '{}') to the backend through the application laod balancer. The applcation laod balancer then sends the information to the e-commerce backend. This proecess takes milliseconds.  
@@ -12,11 +12,14 @@ Inside the ECS the XGBoost model inside the ECS cluster, calculates the churn pr
 3. RDS Data Base: RDS Data Base: The ECS also fetches data from the Relational Data Base (RDS). The collected data from the customer is stored in a relational data base where the data of the customer was stored so far. with the new purchase the column where his ID number row is stored the XGBoost is then able to make a prediction for this customer. This is happens with app.py which is inside the ECS clsuter docker image the applies the following commands. psycopg2 is used to communicate with the RDS: 
 Queries RDS: SELECT * FROM customer_churn LIMIT 5;
 Converts to DataFrame: It turns the raw SQL rows into a Pandas DataFrame (pd.DataFrame(rows, columns=colnames)).
-Feature Engineering: It drops non-essential columns (like CustomerID and Gender) and cleans up the numeric data so the XGBoost model doesn't get confused.
+Feature Engineering: It drops non-essential columns (like CustomerID and Gender) and cleans up the numeric data so the XGBoost model does not get confused.
 In addition, in app.py, sslmode='require' to apply SSL encryption for database connection to be secure.
 
-
-
+4. Build Stage, Github repository, Code pipeline: When the code is pushed to Github, then code build is activated. Code build scans buildspec.yaml file which has the instructions to authenticate and pushe the image to ECR (Elastic Container Registry). Basically:
+    1. Log in to AWS
+    2. Build the docker iamge that based Docker iamge which applies Python 3.8 slim 
+    3. Tag the image and Push it to the Elastic Container Registry (ECR).
+When the docker iamge gets into ECR then code pipeline informs ECS cluster that a new version is ready to be applied.This part is also known as Continuous Integration & Deployment (CI/CD). ECS takes the new docker image from the ECR, replaces the old container task with the new one and stays ready to receive data from the Load Balancer for the next prediction. With other words. if there is a update in the Github repository regarding the chrun project then Build stage will triggered and the new tasks will be applied. Otherwise the build stage will not be triggered. 
 
 
 
@@ -499,6 +502,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
