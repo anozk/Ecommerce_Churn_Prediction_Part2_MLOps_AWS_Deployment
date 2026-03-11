@@ -19,6 +19,7 @@ In addition, in app.py, sslmode='require' to apply SSL encryption for database c
     1. Log in to AWS
     2. Build the docker iamge that based Docker iamge which applies Python 3.8 slim 
     3. Tag the image and Push it to the Elastic Container Registry (ECR).
+
 When the docker iamge gets into ECR then code pipeline informs ECS cluster that a new version is ready to be applied.This part is also known as Continuous Integration & Deployment (CI/CD). ECS takes the new docker image from the ECR, replaces the old container task with the new one and stays ready to receive data from the Load Balancer for the next prediction. With other words. if there is a update in the Github repository regarding the chrun project then Build stage will triggered and the new tasks will be applied. Otherwise the build stage will not be triggered. 
 
 
@@ -502,6 +503,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
