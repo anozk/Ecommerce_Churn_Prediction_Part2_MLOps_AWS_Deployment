@@ -2,9 +2,9 @@
 
 ![Architecture](Screenshot%202026-03-09%20at%2012.38.29.png)
 
-Descriiption of the Architecture:
+Description of the Architecture:
 
-User Access Path: 
+User Access Path: A user in a e-commerce website is purchasing goods and checks out. Behind the scene at the backend, the website fethes the data based on the churn project (see Part 1) such as Warehouse To Home, Satis Faction Score, Order Amount Hike From Last Year, Order Count, Cashback Amount. The e-commerce 
 
 
 
@@ -488,6 +488,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
