@@ -18,12 +18,13 @@ Description of the Architecture:
 
 - Feature Engineering: Drops non-essential columns (such as CustomerID and Gender) and cleans up the numeric data so that the XGBoost model can process it correctly.
 
-4. Build Stage, Github repository, Code pipeline: When the code is pushed to Github, then code build is activated. Code build scans buildspec.yaml file which has the instructions to authenticate and pushe the image to ECR (Elastic Container Registry). Basically:
-    1. Log in to AWS
-    2. Build the docker iamge that based Docker iamge which applies Python 3.8 slim 
-    3. Tag the image and Push it to the Elastic Container Registry (ECR).
+4. Build Stage — GitHub Repository & CodePipeline: When code is pushed to GitHub, CodePipeline detects the change and activates CodeBuild. CodeBuild scans the buildspec.yaml file, which contains the instructions to authenticate with AWS and push the image to the ECR (Elastic Container Registry). Specifically, it:
 
-When the docker iamge gets into ECR then code pipeline informs ECS cluster that a new version is ready to be applied.This part is       also known as Continuous Integration & Deployment (CI/CD). ECS takes the new docker image from the ECR, replaces the old container task with the new one and stays ready to receive data from the Load Balancer for the next prediction. With other words. if there is a update in the Github repository regarding the chrun project then Build stage will triggered and the new tasks will be applied. Otherwise the build stage will not be triggered. 
+1. Logs in to AWS
+2. Builds the Docker image based on Python 3.8 Slim
+3. Tags the image and pushes it to the Elastic Container Registry (ECR)
+
+Once the Docker image is in the ECR, CodePipeline notifies the ECS cluster that a new version is ready to be deployed. This process is also known as Continuous Integration & Continuous Deployment (CI/CD). ECS pulls the new Docker image from ECR, replaces the old container task with the new one, and remains ready to receive data from the Load Balancer for the next prediction. In other words, if there is an update in the GitHub repository related to the churn project, the Build stage will be triggered and the new tasks will be deployed. Otherwise, the Build stage will not be triggered.
 
 Final API Validation: Real-Time Inference Result"
 The terminal shows a successful POST request to the AWS Application Load Balancer endpoint.
@@ -512,6 +513,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
