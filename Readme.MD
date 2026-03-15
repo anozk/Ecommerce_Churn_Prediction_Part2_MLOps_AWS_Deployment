@@ -4,7 +4,7 @@
 
 Description of the Architecture:
 
-1. User Access Path: A user in a e-commerce website is purchasing goods and checks out. Behind the scene at the backend, the website fetches the data based on the churn project (see Part 1) columns such as Warehouse To Home, Satis Faction Score, Order Amount Hike From Last Year, Order Count, Cashback Amount columns. The e-commerce website forwrds the data to load balancer adress (churn-load-balancer-316573120.us-east-1.elb.amazonaws.com). The load balancer is at the very front of the architectaure that takes the data and forwards the data to XgBoost model in this case.  
+1. User Access Path: A user on an e-commerce website is purchasing goods and checks out. Behind the scenes, the backend collects the relevant customer data based on the churn model's input features (see Part 1), such as Warehouse To Home, Satisfaction Score, Order Amount Hike From Last Year, Order Count, and Cashback Amount. The e-commerce website then forwards this data to the Application Load Balancer (churn-load-balancer-316573120.us-east-1.elb.amazonaws.com). The Load Balancer sits at the front of the architecture, receiving the data and routing it to the ECS container running the Flask application, which in turn passes it to the XGBoost model for prediction. 
 
 2. Deploy stage: The data is forwarded by the Application Load Balancer to the ECS (Elastic Container Service), which forwards the request to the already-running containers. Each container is built from a Docker image based on Python 3.8 Slim to keep the image size small. At build time, the Dockerfile installs all dependencies defined in requirements.txt, including XGBoost and Scikit-Learn. The application is served via Flask, with Gunicorn handling several concurrent requests. The connection between the Load Balancer and ECS was configured via a target group to route traffic specifically to Port 5000. Inside the ECS cluster, the XGBoost model calculates the churn probability of the user and sends the result back in JSON format (curl -X POST "http://churn-load-balancer-316573120.us-east-1.elb.amazonaws.com/churn-prediction" \ -H "Content-Type: application/json" \ -d '{}') to the backend through the Application Load Balancer, which then forwards the information to the e-commerce backend. This process takes milliseconds.
 
@@ -510,6 +510,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
