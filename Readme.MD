@@ -26,10 +26,7 @@ Description of the Architecture:
 
 Once the Docker image is in the ECR, CodePipeline notifies the ECS cluster that a new version is ready to be deployed. This process is also known as Continuous Integration & Continuous Deployment (CI/CD). ECS pulls the new Docker image from ECR, replaces the old container task with the new one, and remains ready to receive data from the Load Balancer for the next prediction. In other words, if there is an update in the GitHub repository related to the churn project, the Build stage will be triggered and the new tasks will be deployed. Otherwise, the Build stage will not be triggered.
 
-Final API Validation: Real-Time Inference Result"
-The terminal shows a successful POST request to the AWS Application Load Balancer endpoint.
-The JSON output confirms that the ECS-hosted XGBoost model successfully processed the request, returning a 92.7% churn probability.
-This validation proves that the end-to-end infrastructure—from the Terraform-managed network to the Dockerized Flask application—is fully operational.
+Final API Validation (Real-Time Inference Results): The terminal shows a successful POST request to the AWS Application Load Balancer endpoint. The JSON output confirms that the ECS-hosted XGBoost model successfully processed the request, returning churn probability values ranging from approximately 79% to 93%. This validation proves that the end-to-end infrastructure—from the Terraform-managed network to the Dockerized Flask application—is fully operational.
 
 ![Prediction](Screenshot%202026-03-08%20at%2016.38.42.png)
 
@@ -513,6 +510,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
