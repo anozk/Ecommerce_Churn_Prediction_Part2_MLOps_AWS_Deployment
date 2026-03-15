@@ -6,13 +6,17 @@ Description of the Architecture:
 
 1. User Access Path: A user in a e-commerce website is purchasing goods and checks out. Behind the scene at the backend, the website fetches the data based on the churn project (see Part 1) columns such as Warehouse To Home, Satis Faction Score, Order Amount Hike From Last Year, Order Count, Cashback Amount columns. The e-commerce website forwrds the data to load balancer adress (churn-load-balancer-316573120.us-east-1.elb.amazonaws.com). The load balancer is at the very front of the architectaure that takes the data and forwards the data to XgBoost model in this case.  
 
-Deploy stage: The data is forwarded by the Application Load Balancer to the ECS (Elastic Container Service), which forwards the request to the already-running containers. Each container is built from a Docker image based on Python 3.8 Slim to keep the image size small. At build time, the Dockerfile installs all dependencies defined in requirements.txt, including XGBoost and Scikit-Learn. The application is served via Flask, with Gunicorn handling several concurrent requests. The connection between the Load Balancer and ECS was configured via a target group to route traffic specifically to Port 5000. Inside the ECS cluster, the XGBoost model calculates the churn probability of the user and sends the result back in JSON format (curl -X POST "http://churn-load-balancer-316573120.us-east-1.elb.amazonaws.com/churn-prediction" \ -H "Content-Type: application/json" \ -d '{}') to the backend through the Application Load Balancer, which then forwards the information to the e-commerce backend. This process takes milliseconds.
+2. Deploy stage: The data is forwarded by the Application Load Balancer to the ECS (Elastic Container Service), which forwards the request to the already-running containers. Each container is built from a Docker image based on Python 3.8 Slim to keep the image size small. At build time, the Dockerfile installs all dependencies defined in requirements.txt, including XGBoost and Scikit-Learn. The application is served via Flask, with Gunicorn handling several concurrent requests. The connection between the Load Balancer and ECS was configured via a target group to route traffic specifically to Port 5000. Inside the ECS cluster, the XGBoost model calculates the churn probability of the user and sends the result back in JSON format (curl -X POST "http://churn-load-balancer-316573120.us-east-1.elb.amazonaws.com/churn-prediction" \ -H "Content-Type: application/json" \ -d '{}') to the backend through the Application Load Balancer, which then forwards the information to the e-commerce backend. This process takes milliseconds.
 
-3. RDS Data Base: RDS Data Base: The ECS also fetches data from the Relational Data Base (RDS). The collected data from the customer is stored in a relational data base where the data of the customer was stored so far. with the new purchase the column where his ID number row is stored the XGBoost is then able to make a prediction for this customer. This is happens with app.py which is inside the ECS clsuter docker image the applies the following commands. psycopg2 is used to communicate with the RDS: 
-Queries RDS: SELECT * FROM customer_churn LIMIT 5;
-Converts to DataFrame: It turns the raw SQL rows into a Pandas DataFrame (pd.DataFrame(rows, columns=colnames)).
-Feature Engineering: It drops non-essential columns (like CustomerID and Gender) and cleans up the numeric data so the XGBoost model does not get confused.
-In addition, in app.py, sslmode='require' to apply SSL encryption for database connection to be secure.
+3. RDS Database: The ECS also fetches data from the Relational Database Service (RDS). The customer's historical data is stored in a relational database, and with each new purchase, the relevant row identified by the customer's ID is updated. The XGBoost model is then able to make a prediction for that specific customer. This is handled by app.py, which runs inside the ECS cluster's Docker container and executes the following steps:
+
+- psycopg2 is used to communicate with the RDS.
+
+- Queries RDS: Fetches the customer data using SELECT * FROM customer_churn LIMIT 5;
+
+- Converts to DataFrame: Turns the raw SQL rows into a Pandas DataFrame (pd.DataFrame(rows, columns=colnames)).
+
+- Feature Engineering: Drops non-essential columns (such as CustomerID and Gender) and cleans up the numeric data so that the XGBoost model can process it correctly.
 
 4. Build Stage, Github repository, Code pipeline: When the code is pushed to Github, then code build is activated. Code build scans buildspec.yaml file which has the instructions to authenticate and pushe the image to ECR (Elastic Container Registry). Basically:
     1. Log in to AWS
@@ -508,6 +512,7 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
+
 
 
 
