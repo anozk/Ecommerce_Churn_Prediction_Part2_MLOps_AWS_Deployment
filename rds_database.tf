@@ -12,7 +12,7 @@ variable "db_password" {
   description = "Master password for RDS PostgreSQL"
   type        = string
   sensitive   = true
-  default     = "MyStrongPass123!"
+  default     = var.db_password
 }
 
 
