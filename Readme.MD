@@ -20,9 +20,9 @@ Description of the Architecture:
 
 4. Build Stage — GitHub Repository & CodePipeline: When code is pushed to GitHub, CodePipeline detects the change and activates CodeBuild. CodeBuild scans the buildspec.yaml file, which contains the instructions to authenticate with AWS and push the image to the ECR (Elastic Container Registry). Specifically, it:
 
-1. Logs in to AWS
-2. Builds the Docker image based on Python 3.8 Slim
-3. Tags the image and pushes it to the Elastic Container Registry (ECR)
+- Logs in to AWS
+- Builds the Docker image based on Python 3.8 Slim
+- Tags the image and pushes it to the Elastic Container Registry (ECR)
 
 5. Once the Docker image is in the ECR, CodePipeline notifies the ECS cluster that a new version is ready to be deployed. This process is also known as Continuous Integration & Continuous Deployment (CI/CD). ECS pulls the new Docker image from ECR, replaces the old container task with the new one, and remains ready to receive data from the Load Balancer for the next prediction. In other words, if there is an update in the GitHub repository related to the churn project, the Build stage will be triggered and the new tasks will be deployed. Otherwise, the Build stage will not be triggered.
 
