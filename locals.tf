@@ -7,7 +7,7 @@ locals {
   ecs_task_role           = "arn:aws:iam::212208750479:role/ecsTaskExecutionRole"
   vpc_id                  = "vpc-0d5534ea74dfb6a56"
   db_user      = "master"
-  db_password  = "MyStrongPass123!"
+  db_password  = var.db_password
   db_host      = ""
   db_port      = 5432
   db_name      = "postgres"
