@@ -39,5 +39,9 @@ env_3.8/
 # Hidden Terraform Directories added afterwards (terraform.tfstate, terraform.tfstate.backup ignored as well)
 .terraform/
 **/.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.backup
 secrets.*
-terraform.*
+*.tfvars
