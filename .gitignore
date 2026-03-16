@@ -39,3 +39,4 @@ env_3.8/
 # Hidden Terraform Directories added afterwards 
 .terraform/
 **/.terraform/
+secrets.*
