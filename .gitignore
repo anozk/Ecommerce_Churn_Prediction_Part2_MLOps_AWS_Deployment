@@ -36,7 +36,8 @@ FlaskApplication/src/.env.*
 env_3.8/
 **/env_3.8/
 
-# Hidden Terraform Directories added afterwards 
+# Hidden Terraform Directories added afterwards (terraform.tfstate, terraform.tfstate.backup ignored as well)
 .terraform/
 **/.terraform/
 secrets.*
+terraform.*
