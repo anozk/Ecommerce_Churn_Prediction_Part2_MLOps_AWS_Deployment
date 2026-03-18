@@ -53,7 +53,7 @@ This project demonstrates the end-to-end deployment of a Customer Churn Predicti
 7. Apply Terraform to provision AWS resources as code.
 8. Ensure best practices for monitoring, scalability, and reproducibility in MLOps.
 
-## Tech Stack
+### Tech Stack
 
 
 * Language: Python
