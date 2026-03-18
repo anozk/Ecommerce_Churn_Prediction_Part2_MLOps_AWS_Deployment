@@ -21,7 +21,7 @@ variable "db_password" {
 resource "aws_security_group" "rds_sg" {
   name        = "rds-postgres-sg"
   description = "Allow PostgreSQL access"
-  vpc_id      = "vpc-0d5534ea74dfb6a56" # Replace with your actual VPC ID
+  vpc_id      = var.vpc_id # Replace with your actual VPC ID
 
   ingress {
     from_port   = 5432
