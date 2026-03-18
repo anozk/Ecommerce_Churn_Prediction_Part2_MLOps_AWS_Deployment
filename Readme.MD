@@ -42,7 +42,7 @@ Final API Validation (Real-Time Inference Results): The terminal shows a success
 
 This project demonstrates the end-to-end deployment of a Customer Churn Prediction model on AWS. It automates the lifecycle from model packaging and containerization to deployment and monitoring using CI/CD pipelines.
 
-* Key Objectives
+### Key Objectives
 
 1. Automate the ML model deployment lifecycle with AWS CI/CD services.
 2. Containerize the model using Docker and store images in Amazon ECR.
@@ -53,7 +53,7 @@ This project demonstrates the end-to-end deployment of a Customer Churn Predicti
 7. Apply Terraform to provision AWS resources as code.
 8. Ensure best practices for monitoring, scalability, and reproducibility in MLOps.
 
-* Tech Stack
+# Tech Stack
 
 
 * Language: Python
