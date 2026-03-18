@@ -5,6 +5,10 @@
 
 **Keywords:** MLOps · AWS ECS · Docker · Flask · Terraform · CodePipeline · CodeBuild · ECR · RDS · Application Load Balancer · CI/CD · XGBoost · Python
 
+### MLOPS AWS
+
+This project demonstrates the end-to-end deployment of a Customer Churn Prediction model on AWS. It automates the lifecycle from model packaging and containerization to deployment and monitoring using CI/CD pipelines.
+
 ### Architecture
 
 ![Architecture](Screenshot%202026-03-09%20at%2012.38.29.png)
@@ -36,11 +40,6 @@ Description of the Architecture:
 Final API Validation (Real-Time Inference Results): The terminal shows a successful POST request to the AWS Application Load Balancer endpoint. The JSON output confirms that the ECS-hosted XGBoost model successfully processed the request, returning churn probability values ranging from approximately 79% to 93%. This validation proves that the end-to-end infrastructure—from the Terraform-managed network to the Dockerized Flask application—is fully operational.
 
 ![Prediction](Screenshot%202026-03-08%20at%2016.38.42.png)
-
-
-### MLOPS AWS
-
-This project demonstrates the end-to-end deployment of a Customer Churn Prediction model on AWS. It automates the lifecycle from model packaging and containerization to deployment and monitoring using CI/CD pipelines.
 
 ### Key Objectives
 
