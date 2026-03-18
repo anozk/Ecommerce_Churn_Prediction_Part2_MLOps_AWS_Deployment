@@ -230,7 +230,7 @@ This script will read the input file input/Churn_Modelling.csv and load the reco
 * Make sure the virtual environment env_3.8 is activated before running the script.
 
 
-6) Execute the Application directly on Local sysytem
+6) Execute the Application directly on Local system
 
 Before deploying to AWS, you can test the Flask application locally to ensure it is working correctly with the RDS database.
 
