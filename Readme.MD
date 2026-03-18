@@ -1,4 +1,9 @@
-# # Ecommerce Churn Prediction — Part 2: MLOps & AWS Deployment
+# Ecommerce Churn Prediction — Part 2: MLOps & AWS Deployment
+
+## Overview
+**Part 1 — Modeling:** [Ecommerce Churn Prediction Modeling](https://github.com/anozk/Ecommerce_Churn_Prediction_Modeling)
+
+**Keywords:** MLOps · AWS ECS · Docker · Flask · Terraform · CodePipeline · CodeBuild · ECR · RDS · Application Load Balancer · CI/CD · XGBoost · Python
 
 ### Architecture
 
