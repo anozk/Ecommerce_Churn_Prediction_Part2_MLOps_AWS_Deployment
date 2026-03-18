@@ -109,7 +109,7 @@ Download the project code ZIP from the project Download / Codes section.
 Extract the ZIP to a folder on your local system.
 
 
-# Open the extrcated code folder in VS Code
+# Open the extracted code folder in VS Code
 
 cd C:\Downloads\Code
 code .
@@ -137,10 +137,10 @@ Create a Python 3.8 virtual environment (Flask application is configured to work
 
 Windows
 
-# Creating Virual environment
+# Creating Virtual environment
 py -3.8 -m venv env_3.8
 
-# Activating Virual environment
+# Activating Virtual environment
 env_3.8\Scripts\activate
 
 
@@ -153,7 +153,7 @@ python3.8 -m venv env_3.8
 source env_3.8/bin/activate
 
 
-#Navigate to the FlaskApplication folder where the requirements.txt is avaialable
+#Navigate to the FlaskApplication folder where the requirements.txt is available
 
 cd FlaskApplication
 # Install required Python packages:
@@ -517,34 +517,3 @@ curl -X POST http://<load-balancer-dns>/churn-prediction
 
 3. The ML backend processes the data and returns churn predictions for the specified customers.
 curl -X POST http://churn-load-balancer-1504372420.us-east-1.elb.amazonaws.com/churn-prediction 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
