@@ -1,3 +1,5 @@
+# # Ecommerce Churn Prediction — Part 2: MLOps & AWS Deployment
+
 ### Architecture
 
 ![Architecture](Screenshot%202026-03-09%20at%2012.38.29.png)
